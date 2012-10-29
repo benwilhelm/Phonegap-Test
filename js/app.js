@@ -10,6 +10,7 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         document.getElementById('scan_me').addEventListener('click', this.scan, false);
+        document.getElementById('quit_me').addEventListener('click', navigator.app.exitApp, false);
     },
     // deviceready Event Handler
     //
