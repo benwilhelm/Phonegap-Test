@@ -42,7 +42,10 @@ var app = {
                     window.plugins.childBrowser.showWebPage(args.text, { showLocationBar: false });
                 }
                 */
-                $('#status').html(args.text) ;
+                
+                var ret = "Format: " + args.format ;
+                ret += "<br>Text: " + args.text ;
+                $('#status').html(ret) ;
                 console.log(args);
         });
         } catch (ex) {
