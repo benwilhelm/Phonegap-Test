@@ -52,7 +52,16 @@ var app = {
         });
         } catch (ex) {
             $('#status').append(ex.message + '<br>');
+            $("#status").append("Sample Code:<br>") ;
+            app.print_code("987654321","EAN_8") ;
         }
+    },
+    print_code: function(tp,txt) {
+      console.log("print code") ;
+      var bcType = tp.toLowerCase() ;
+      bcType = bcType.replace('_','') ;
+      $("#status").append("test<br>") ;
+      $("#status").barcode("4321","ean8") ;
     },
     quit: function() {
       console.log('quitting') ;
