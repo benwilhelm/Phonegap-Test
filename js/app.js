@@ -10,6 +10,7 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         document.getElementById('scan_me').addEventListener('click', this.scan, false);
+        document.getElementById('test_me').addEventListener('click', this.test_code, true);
         document.getElementById('quit_me').addEventListener('click', this.quit, true);
         document.addEventListener("backbutton", this.quit, true) ;
     },
@@ -29,42 +30,42 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
     },
     scan: function() {
-        console.log('scanning');
+
         try {
             window.plugins.barcodeScanner.scan(function(args) {
-                console.log("Scanner result: \n" +
-                    "text: " + args.text + "\n" +
-                    "format: " + args.format + "\n" +
-                    "cancelled: " + args.cancelled + "\n");
+
                 /*
                 if (args.format == "QR_CODE") {
                     window.plugins.childBrowser.showWebPage(args.text, { showLocationBar: false });
                 }
                 */
-                
-                var ret = "Format: " + args.format ;
-                ret += "<br>Text: " + args.text ;
-                $('#status').html(ret) ;
-                console.log(args);
+
+                app.print_code(args.text,args.format,true) ;
         });
         } catch (ex) {
             $('#status').append(ex.message + '<br>');
             $("#status").append("Sample Code:<br>") ;
-            app.print_code("987654321","EAN_8") ;
+            app.print_code("9876543","EAN_8") ;
         }
     },
-    print_code: function(tp,txt) {
-      console.log("print code") ;
+    print_code: function(txt,tp,clr) {
+      if (clr) {
+        $('#status').html('') ;
+      }
+
       var bcType = tp.toLowerCase() ;
       bcType = bcType.replace('_','') ;
-      $("#status").append("test<br>") ;
-      $("#status").barcode("4321","ean8") ;
+      $bc = $('#bc') ;
+      $bc.barcode(txt,bcType,{barWidth:2,barHeight:100}) ;
+      var w = $bc.width() ;
+      //$bc.css('width',w) ;
+    },
+    test_code: function() {
+      app.print_code("9876543","EAN_8") ;
     },
     quit: function() {
-      console.log('quitting') ;
       navigator.app.exitApp() ;
     }
 
